@@ -1,5 +1,7 @@
 import random
 import time
+from typing import Dict
+
 
 class Human:
     def __init__(self, name="Human", job=None, home=None, car=None):
@@ -14,10 +16,11 @@ class Human:
         self.home = home
         self.car = car
 
-    def get_job(self, job):
+    def get_job(self):
+        job = get_work()
         self.job = job
-        print(f"{self.name} got a new job as a {job}.")
-        self.money += 500
+        print(f"{self.name} got a new job as a {job.title}.")
+        self.money += job.salary
 
     def get_home(self):
         self.home = House()
@@ -172,6 +175,24 @@ brands_of_car = {
 }
 
 
+def get_work():
+    jobs = [
+        Job("Developer", 500),
+        Job("Accountant", 300),
+        Job("Lawyer", 700),
+        Job("Teacher", 200)
+    ]
+
+    print("Available jobs:")
+    for i, job in enumerate(jobs):
+        print(f"{i + 1}. {job.title} ({job.salary} per day)")
+
+    choice = input("Enter job number: ")
+    job = jobs[int(choice) - 1]
+
+    return job
+
+
 class Auto:
     def __init__(self, brand_list):
         self.brand = random.choice(list(brand_list))
@@ -194,6 +215,15 @@ class House:
     def __init__(self):
         self.mess = 0
         self.food = 0
+
+
+
+
+
+class Job:
+    def __init__(self, title, salary):
+        self.title = title
+        self.salary = salary
 
 
 person = Human(name="John")
